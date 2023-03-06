@@ -45,6 +45,19 @@ Array.prototype.myFilter = function (cb, obj) {
 
 
 
+// filter 传入一个回调函数，及this指向,返回满足条件的一个值
+Array.prototype.myFind = function (cb, obj) {
+  const _this = this
+  for (let i = 0; i < _this.length; i++) {
+    if (cb.call(obj, _this[i], i, _this)) {
+      return _this[i]
+    }
+  }
+}
+
+
+
+
 // map filter 传入一个回调函数，及this指向,重新返回一个数组
 
 Array.prototype.myMap = function (cb, obj) {
