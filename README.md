@@ -1,2 +1,2 @@
 # jsBasic
-Related js knowledge learning
+js知识学习
