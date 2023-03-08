@@ -1,2 +1,3 @@
 # jsBasic
-Related js knowledge learning
+1.js相关知知识
+2.重写数组、对象、函数等内置对象方法

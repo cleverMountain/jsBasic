@@ -4,7 +4,7 @@
 Array.prototype.myJoin = function (separator) {
   separator = separator || ''
   let res = ''
-  for (let i = o i < this.length i++) {
+  for (let i = 0; i < this.length; i++) {
     res += this[i] + separator
   }
   return res.slice(0, res.length)
