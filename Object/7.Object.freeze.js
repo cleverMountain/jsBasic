@@ -4,7 +4,7 @@ let obj = {
   a: 1
 }
 
-
+// 属性不可修改，不可删除，不可枚举，不可添加
 
 // 静态属性
 function freeze(obj) {
