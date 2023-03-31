@@ -3,8 +3,16 @@ const str = '323'
 
 // 手写
 function arrayFrom(iterate, cb, thisArg) {
-  for (let i = 0; i < iterate.length; i++) {
-    cb.call(thisArg, iterate[i], i)
+  if (cb) {
+    for (let i = 0; i < iterate.length; i++) {
+      cb.call(thisArg, iterate[i], i)
+    }
+  } else {
+    let res = []
+    for (let i = 0; i < iterate.length; i++) {
+      res.push(iterate[i])
+    }
+    return res
   }
 }
 
@@ -39,3 +47,23 @@ console.log(arrayLike)
 
 
 // 可迭代对象的定义
+
+let iterate = {
+  0:42, 
+  1:52, 
+  2:63, 
+  length:3, 
+  [Symbol.iterator]: Array.prototype[Symbol.iterator]
+};
+
+
+for(let k of [1,2,3, 4]) {
+  console.log(k)
+}
+
+
+console.log(arrayFrom('ewq'))
+
+
+// 数据去重
+console.log(new Set(Array.from('111')))
