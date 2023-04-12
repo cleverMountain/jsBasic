@@ -15,6 +15,7 @@
     function reactive(target) {
       const handler = {
         set(target, key, value, receiver) {
+          debugger
           // console.log(target, key, value, receiver)
           // target: 目标对象 key: key value ：值
           // 消除数组length的影响
@@ -24,6 +25,7 @@
           return Reflect.set(target, key, value, receiver) // true | false
         },
         get(target, key, receiver) {
+          
           // console.log(target, key, receiver)
           // target: 目标对象 key: key valu
           // 返回值
