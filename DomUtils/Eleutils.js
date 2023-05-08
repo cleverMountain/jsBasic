@@ -110,3 +110,21 @@ function getStyles (elem, prop) {
     }
   }
 }
+
+
+
+// 获取偏移量距离祖先元素
+function getOffsetSize(el) {
+  let offsetLeft = el.offsetLeft,
+      offsetTop = el.offsetTop
+      parent = el.offsetParent
+  while (parent) {
+    offsetLeft += parent.offsetLeft
+    offsetTop += parent.offsetTop
+    parent  = parent.offsetParent
+  }
+  return {
+    width: offsetLeft,
+    height: offsetTop
+  }
+}
