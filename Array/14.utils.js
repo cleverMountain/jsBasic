@@ -1,5 +1,5 @@
 
-]
+
 
 /**
  * 
@@ -17,7 +17,7 @@ function removeSelfDuplicate(arr, prop) {
   }, [])
 }
 
-console.log(removeSelfDuplicate(arr, 'name'))
+
 
 
 /**
@@ -34,4 +34,3 @@ function getOtherDuplicate(source, target, prop, isDuplicate) {
     return isDuplicate ? status : !status
   })
 }
-console.log(getOtherDuplicate(arr, arr2, 'id', true))
