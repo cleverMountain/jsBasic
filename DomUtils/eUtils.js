@@ -22,3 +22,32 @@ function pagePos(e) {
     y: e.clientY + top - cTop
   }
 }
+
+
+
+// 绑定事件函数的兼容写法
+function addEvent(el, type, fn) {
+  if (el.addEventListener) {
+    el.addEventListener(type, fn, false)
+  } else if (el.attachEvent) {
+    // ie8及以下
+    el.attachEvent('on' + type, function () {
+      // attachEvent this指向window
+      fn.call(el)
+    })
+  } else {
+    // 更低
+    el['on' + type] = fn
+  }
+}
+
+
+// 阻止冒泡的兼容写法
+function cancelBubble(e) {
+  e = e || window.event
+  if (e.stopPropagation) {
+    e.stopPropagation()
+  } else {
+    e.cancelBubble = true
+  }
+}
