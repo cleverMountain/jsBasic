@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .d1 {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background-color: orange;
+      left: 400px;
+      top: 400px;
+    }
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    .p {
+      margin: 100px;
+      width: 200px;
+      height: 200px;
+      background: gray;
+      position: relative;
+    }
+
+    .s {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      left: 50px;
+      bottom: 50px;
+      background: black;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="d1" ></div>
+  <div class="p">
+    <div class="s"></div>
+  </div>
+  <script src="./drag.js"></script>
+  <script>
+    const d1 = document.getElementsByClassName('d1')[0]
+    drag(d1)
+
+
+    setTimeout(() => {
+      d1.style.display = 'none'
+    }, 3000)
+    setTimeout(() => {
+      d1.style.display = 'block'
+    }, 4000)
+
+
+     /**
+     * offsetLeft: 与父级元素距离(父元素是否有定位元素),如果没有一直找到body
+    */
+    let son = document.getElementsByClassName('s')[0]
+    // 有定位的父级元素
+
+console.log(son.offsetLeft)
+    // 获取到视口的坐标
+    function getOffsetSize(el) {
+      let offsetLeft = el.offsetLeft,
+          offsetTop = el.offsetTop
+          parent = el.offsetParent
+      while (parent) {
+        offsetLeft += parent.offsetLeft
+        offsetTop += parent.offsetTop
+        parent  = parent.offsetParent
+      }
+      return {
+        width: offsetLeft,
+        height: offsetTop
+      }
+    }
+    console.log(getOffsetSize(son))
+  </script>
+  </script>
+</body>
+
+</html>
