@@ -10,16 +10,30 @@
 
 <body>
   <div id="app">132</div>
-  <script type="module" src="./1.set_get_has.js"></script>
-  <!-- <script>
-    createApp({
-      data() {
-        return {
-          count: 0
-        }
+  <!-- <script type="module" src="./1.set_get_has.js"></script> -->
+  <script>
+    // createApp({
+    //   data() {
+    //     return {
+    //       count: 0
+    //     }
+    //   }
+    // }).mount('#app')
+    let obj = {}
+    let obj1 = {
+      a: 1,
+      b: 2
+    }
+    Object.defineProperty(obj, 'a', {
+      get() {
+        return obj1['a']
+      },
+      set (newVal) {
+        obj['a'] = newVal
       }
-    }).mount('#app')
-  </script> -->
+    })
+    console.log(obj)
+  </script>
 </body>
 
 </html>

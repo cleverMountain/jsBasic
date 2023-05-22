@@ -6,11 +6,46 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-
+  <style>
+    .button-group {
+      display: flex;
+      margin-top: 12px;
+    }
+    .button-group .button {
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid gray;
+      margin-left: 20px;
+      cursor: pointer;
+    }
+    .button-group .current {
+      background: #9e9e9e;
+    }
+    .f-input {
+      width: 80px;
+    }
+    .s-input {
+      width: 80px;
+    }
+  </style>
 </head>
 
 <body>
-  <script src="./11.Object.getPrototypeOf.js"></script>
+  <div>
+    <div class="result">0</div>
+    <input value="0" class="f-input">
+    <input value="0" class="s-input">
+    <div class="button-group">
+      <div class="button current">+</div>
+      <div class="button">-</div>
+      <div class="button">*</div>
+      <div class="button">/</div>
+    </div>
+  </div>
+  <script src="./13.Object.property.js"></script>
 </body>
 
 </html>
