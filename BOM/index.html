@@ -29,24 +29,28 @@
       justify-content: center;
       cursor: pointer;
     }
+
+    .current {
+      background: gray;
+    }
   </style>
 </head>
 
 <body>
   <div class="container">
     <div class="left">
-      <a class="item" onclick="clickRouter('/')">首页</a>
-      <a class="item" onclick="clickRouter('/cart')">购物车</a>
-      <a class="item" onclick="clickRouter('/shop')">商城</a>
-      <a class="item" onclick="clickRouter('/mine')">我的</a>
-      <a class="item" onclick="goForward()">前进</a>
-      <a class="item" onclick="goBack()">后退</a>
+      <a class="item current">首页</a>
+      <a class="item">购物车</a>
+      <a class="item">商城</a>
+      <a class="item">我的</a>
+      <a class="item">前进</a>
+      <a class="item"> 后退</a>
     </div>
     <div class="right" id="right">
     </div>
   </div>
-  <script src="./history.js">
-  
+  <script src="./2.history.js">
+
   </script>
 
   </script>
