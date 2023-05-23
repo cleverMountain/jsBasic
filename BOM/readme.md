@@ -14,3 +14,13 @@ dom核心是window对象，window对象包括了js全局对象  dom  bom
 1. ECMAScript
 2. DOM
 3. Bom
+
+
+# 路由
+
+1. hash路由
+
+
+
+
+2. history路由
