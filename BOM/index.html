@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .container {
+      width: 600px;
+      height: 400px;
+
+      display: flex;
+    }
+
+    .right {
+      flex: 1;
+      height: 100%;
+      border: 1px solid black;
+    }
+
+    .item {
+      width: 100px;
+      height: 40px;
+      border: 1px solid black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="left">
+      <a class="item" onclick="clickRouter('/')">首页</a>
+      <a class="item" onclick="clickRouter('/cart')">购物车</a>
+      <a class="item" onclick="clickRouter('/shop')">商城</a>
+      <a class="item" onclick="clickRouter('/mine')">我的</a>
+      <a class="item" onclick="goForward()">前进</a>
+      <a class="item" onclick="goBack()">后退</a>
+    </div>
+    <div class="right" id="right">
+    </div>
+  </div>
+  <script src="./history.js">
+  
+  </script>
+
+  </script>
+
+</body>
+
+
+</html>

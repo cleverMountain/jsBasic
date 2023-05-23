@@ -20,7 +20,7 @@
           // target: 目标对象 key: key value ：值
           // 消除数组length的影响
           if (!target.hasOwnProperty(key)) {
-            changIner(value)
+            // changIner(value)
           }
           return Reflect.set(target, key, value, receiver) // true | false
         },
@@ -39,6 +39,9 @@
         // 是否存在，使用in
         has(target, key) {
           return Reflect.has(target, key)
+        },
+        deleteProperty (target, property) {
+          return Reflect.deleteProperty(target, property)
         }
       }
       return new Proxy(target, handler)
@@ -48,7 +51,10 @@
     let res = reactive(obj)
     console.log('a' in res)
     setTimeout(() => {
-      res.f.push(100)
+      // res.f.push(100)
+      // res.e = 100
+      delete res.a
+      console.log(res)
     }, 2000);
   }
 
