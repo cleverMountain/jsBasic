@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .contain {
+      display: flex;
+      position: relative;
+      height: 100px;
+    }
+
+    .d1 {
+      width: 100px;
+      height: 100px;
+      background: red;
+      position: absolute;
+      left: 0px;
+      top: 0;
+
+    }
+
+    .line {
+      width: 1px;
+      height: 100px;
+      background: black;
+      position: absolute;
+      left: 300px;
+      top: 0;
+    }
+
+    .sport {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="contain">
+    <div class="d1"></div>
+    <div class="line"></div>
+  </div>
+  <button class="sport">运动</button>
+  <script>
+    let d1 = document.getElementsByClassName('d1')[0],
+      btn = document.getElementsByClassName('sport')[0],
+      line = document.getElementsByClassName('line')[0],
+      timer = null
+
+
+    btn.onclick = function () {
+      starSlowtMove(d1, 9)
+
+    }
+
+    // 缓速
+    function starSlowtMove(dom, speed) {
+      clearInterval(timer)
+      timer = setInterval(() => {
+        speed = (300 - dom.offsetLeft) / 7
+        console.log(speed)
+        console.log(dom.offsetLeft)
+        /**
+         * 当speed小于1大于0时让其一直为1，style累加1
+         * 当speed小于0大于-1时一直为-1.style累加-1
+         * spe
+        */
+        speed = speed < 0 ? Math.floor(speed) : Math.ceil(speed)
+        // 另一种写法
+        /**
+         *  
+         * if (0 < speed && speed < 1) {
+          speed = 1
+          }
+          if (-1 < speed && speed < 0) {
+            speed = -1
+          }
+        */
+        if (dom.offsetLeft === 300) {
+          clearInterval(timer)
+        } else {
+          dom.style.left = dom.offsetLeft + speed + 'px'
+        }
+
+
+      }, 30)
+    }
+    // function startMove (dom, speed) {
+    //   speed = dom.offsetLeft - 300 > 0 ? -speed : speed
+    //   clearInterval(timer)
+    //   timer = setInterval(() => {
+    //     if ( Math.abs(300 - dom.offsetLeft)  < Math.abs(speed)) {
+    //       // speed > 0 && d1.offsetLeft >= 300 - speed || speed < 0 && d1.offsetLeft <= 300 - speed
+    //       clearInterval(timer)
+    //       dom.style.left = 300 + 'px'
+    //     } else {
+    //       dom.style.left = dom.offsetLeft + speed + 'px'
+    //     }
+    //   }, 30)
+    // }
+  </script>
+</body>
+
+</html>
