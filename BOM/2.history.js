@@ -9,18 +9,15 @@
       this.stackLimit = []
       this.isBack = false
       this.init()
-      // this._bindPopState();
     }
 
-    // 初始化挂载路由
-    // init(path) {
-    //   history.replaceState({ path: path }, null, path);
-    //   // pushState相同
-    //   // history.pushState({ path: path }, null, path);
-    //   this.setRouter(path);
-    // }
     init() {
+      this.initFirstPage()
+      this.bindPopState()
       this.routerEle.addEventListener('click', this.handleRouterClick.bind(this), false)
+    }
+    initFirstPage () {
+      this.go(0)
     }
     handleRouterClick(ev) {
       const e = ev || window.event
@@ -28,6 +25,13 @@
       // 方法  this指向谁调用  [参数]
       const index = Reflect.apply(Array.prototype.indexOf, this.routerEle.children, [target])
       this.changeClassName(index)
+      if (index < 4 && index != -1) {
+        this.go(index)
+      } else if (index == 4) {
+        this.goto()
+      } else {
+        this.back()
+      }
     }
     changeClassName(index) {
       const length = this.routerEle.children.length
@@ -38,38 +42,39 @@
       this.routerEle.children[index].className += ' current'
     }
     // 路由跳转
-    go(path) {
+    go(index) {
+      const path = this.routes[index].path
+      // pushState 添加路由时使用pushState
       history.pushState({ path: path }, null, path);
-      this.setRouter(path);
+      this.changeContent(path);
       this.stack.push(path)
       this.isBack = false
       this.stackLimit.push(path)
     }
-
     // 监听popstate方法
-    _bindPopState() {
+    bindPopState() {
+      // popState监听路由变化，只有 window.history.forward()与window.history.back()才会触发
       window.addEventListener("popstate", (e) => {
         const path = e.state && e.state.path;
-        console.log(e)
-        this.setRouter(path);
+        this.changeContent(path);
       });
     }
 
-    // 设置路由
-    setRouter(path) {
-      let curRoute = this.routes.find((route) => route.path === path);
-      if (!curRoute) {
+    // 改变页面
+    changeContent(path) {
+      let curContent = this.routes.find((route) => route.path === path);
+      console.log(curContent)
+      if (!curContent) {
         this.routes.find((route) => route.path === "/");
+        return
       }
-
-      let { component } = curRoute;
-      document.getElementById("right").innerHTML = component;
+      let { component } = curContent && curContent;
+      this.contentEle.innerHTML = component;
     }
     goto() {
       window.history.forward()
     }
     back() {
-
       window.history.back()
     }
   }
@@ -98,15 +103,4 @@
   const routerEle = document.getElementsByClassName('left')[0]
   const contentEle = document.getElementsByClassName('right')[0]
   const router = new newHistoryRouter({ routes, routerEle, contentEle });
-
-  // router.init('/');
-  // function clickRouter(path) {
-  //   router.go(path);
-  // }
-  // function goBack() {
-  //   router.back()
-  // }
-  // function goForward() {
-  //   router.goto()
-  // }
 })()
