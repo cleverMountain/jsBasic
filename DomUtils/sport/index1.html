@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .d1 {
+      width: 100px;
+      height: 100px;
+      background: red;
+      opacity: 0.1;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="d1"></div>
+  <script>
+
+    function getStyles(elem, prop) {
+      if (window.getComputedStyle) {
+        if (prop) {
+          return window.getComputedStyle(elem, null)[prop]
+        } else {
+          return window.getComputedStyle(elem, null)
+        }
+      } else {
+        if (prop) {
+          return elem.currentStyle[prop]
+        } else {
+          return elem.currentStyle
+        }
+      }
+    }
+    let d1 = document.getElementsByClassName('d1')[0]
+    let timer = null
+    d1.onclick = function () {
+      let originOpacity = parseFloat(getStyles(d1, 'opacity'))
+
+      clearInterval(timer)
+      timer = setInterval(() => {
+        originOpacity += 0.1
+        d1.style.opacity = originOpacity
+        if (originOpacity >= 1) {
+          clearInterval(timer)
+        }
+      }, 100)
+    }
+
+  </script>
+</body>
+
+</html>
