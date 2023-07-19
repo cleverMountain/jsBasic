@@ -20,6 +20,11 @@ function handleChangeUname() {
 function handleChangeUpwd() {
   user.upwd = this.value
 }
+
+init()
+/**
+ * 策略
+ */
 const strategy = {
   o: {},
   unameEmpty(uname, message) {
@@ -39,8 +44,56 @@ const strategy = {
       }
       return upwd
     }
+  },
+  minLength(uname, errMsg, length) {
+    if (uname.length < length) {
+      return alert(errMsg)
+    }
+    // return uname
   }
 }
+/**
+ * 策略模式验证，也算是发布订阅模式
+ */
+class Validator {
+  constructor() {
+    this.cache = []
+  }
+  add(dom, rules) {
+
+    rules.forEach(rule => {
+      let { strage, errMsg } = rule
+      let length
+      if (strage.includes(':')) {
+        const strageArr = strage.split(':')
+
+        strage = strageArr[0]
+        length = strageArr[1]
+      }
+      this.cache.push(() => {
+        return strategy[strage].call(strategy, dom.value, errMsg, length)
+      })
+    })
+  }
+  start() {
+    return this.cache.map(cb => cb())
+  }
+}
+
+function startValidator() {
+  const validator = new Validator()
+  validator.add(window.unameEle, [
+    { strage: 'unameEmpty', errMsg: '用户名不为空' },
+    { strage: 'minLength:6', errMsg: '用户名要大于六位' }
+
+  ])
+  validator.add(window.upwdEle, [
+    { strage: 'upwdEmpty', errMsg: '密码不为空' }
+  ])
+  return validator.start()
+}
+
+
 function submit() {
   // if (!user.uname) {
   //   return alert('sad')
@@ -48,19 +101,9 @@ function submit() {
   // if (!user.upwd) {
   //   return alert('sad')
   // }
-  let uname = strategy['unameEmpty'](user.uname, '用户')
-  let upwd = strategy['upwdEmpty'](user.upwd, '密码')
-  console.log(uname, upwd)
+  // let uname = strategy['unameEmpty'](user.uname, '用户')
+  // let upwd = strategy['upwdEmpty'](user.upwd, '密码')
+  // console.log(uname, upwd)
+  let res = startValidator()
+  console.log(res)
 }
-class Validator {
-  constructor() {
-    this.cache = []
-  }
-  add(dom, rules) {
-
-  }
-  start()
-}
-const validator = new Validator()
-validator.add()
-init()
