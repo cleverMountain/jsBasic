@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div {
+      width: 100px;
+      height: 60px;
+      background: red;
+      margin-top: 40px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div></div>
+  <div></div>
+  <div></div>
+  <script>
+    const oDiv = document.getElementsByTagName('div')
+    console.log(oDiv)
+    for (let i = 0; i < oDiv.length; i++) {
+      oDiv[i].onmouseenter = function () {
+        changeWidth(oDiv[i], i, 20)
+      }
+      oDiv[i].onmouseleave = function () {
+        backWidth(oDiv[i], i, 20, 100)
+      }
+    }
+
+    function changeWidth(ele, i, speed) {
+      console.log(i)
+      ele.timer = null
+
+      clearInterval(ele.timer)
+      ele.timer = setInterval(() => {
+        if (parseInt(ele.style.width) >= (300 - speed)) {
+          clearInterval(ele.timer)
+        } else {
+          ele.style.width = speed + ele.offsetWidth + 'px'
+        }
+      }, 30)
+    }
+ 
+    function backWidth (ele, i, speed, origin) {
+      ele.timer = null
+      clearInterval(ele.timer)
+   
+      ele.timer = setInterval(() => {
+        if (parseInt(ele.style.width) <= origin) {
+          clearInterval(ele.timer)
+        } else {
+          ele.style.width = ele.offsetWidth - speed + 'px'
+        }
+      }, 30)
+    }
+  </script>
+</body>
+
+</html>

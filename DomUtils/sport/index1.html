@@ -11,7 +11,7 @@
       width: 100px;
       height: 100px;
       background: red;
-      opacity: 0.1;
+      opacity: 1;
       cursor: pointer;
     }
   </style>
@@ -36,7 +36,9 @@
         }
       }
     }
+
     let d1 = document.getElementsByClassName('d1')[0]
+
     let timer = null
     d1.onclick = function () {
       let originOpacity = parseFloat(getStyles(d1, 'opacity'))
