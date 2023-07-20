@@ -1,3 +1,4 @@
+// @ts-nocheck
 import HTML5History from "./history/history"
 import createMatcher from "./createMatcher"
 
@@ -14,6 +15,14 @@ class Router {
   }
   init() {
 
+  }
+  push(path) {
+
+    this.history.changeUrl(path)
+    
+  }
+  beforeEach(cb) {
+    this.history.ccc(cb)
   }
 }
 
@@ -57,6 +66,6 @@ router.addRouts([
   }
 ])
 
+console.log(router)
 
- 
 export default router

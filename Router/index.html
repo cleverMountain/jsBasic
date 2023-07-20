@@ -42,24 +42,23 @@
 
   <div class="container">
     <div class="nav">
-      <a class="route" οnclick="routerChange()">About</a>
-      <!-- <a class="route" onclick="routerChange('/home')">Home</a>
-      <a class="route" onclick="routerChange('/shop')">Shop</a>
-      <a class="route" onclick="routerChange('/cart')">Cart</a> -->
+      <a class="route" to="/about">About</a>
+      <a class="route" to="/home">Home</a>
+      <a class="route" to="/shop">Shop</a>
+      <a class="route" to="/cart">Cart</a>
     </div>
     <div class="content"></div>
-    <button type="submit" id="btn_submit" οnlick="btnAction()"> submit </button>
+
   </div>
 
-  <script >
-    // import router from "./index.js"
-    // console.log(router)
-    // onclick="router.push('/about')"
-    function btnAction(path) {
-      debugger
-      console.log(path)
-    }
+  <script type="module">
+    import router from "./index.js"
 
+    const nav = document.getElementsByClassName('nav')[0]
+    nav.onclick = function(e) {
+
+      router.push(e.target.attributes.to.nodeValue)
+    }
   </script>
 </body>
 

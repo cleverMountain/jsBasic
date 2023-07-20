@@ -7,10 +7,14 @@ export default class HTML5History extends History {
     this.init()
   }
   init() {
-    
-    window.addEventListener('pushstate', () => {
+    window.addEventListener('popstate', () => {
       debugger
     })
+  }
+  changeUrl(path) {
+  
+    history.pushState({ path }, null, path);
+    this.transitioTo(path)
   }
 }
 
