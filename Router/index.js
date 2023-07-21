@@ -1,10 +1,13 @@
 // @ts-nocheck
 import HTML5History from "./history/history"
+import hashHistory from "./history/hash"
 import createMatcher from "./createMatcher"
 
 class Router {
   constructor(options) {
     const { routes, mode } = options
+    this.beforeHooks = []
+    this.afterHooks = []
     // 创建matcher映射表
     this.matcher = createMatcher(routes || [], this)
     if (mode === 'history') {
@@ -17,12 +20,15 @@ class Router {
 
   }
   push(path) {
-
     this.history.changeUrl(path)
-    
   }
+  // 前置守卫
   beforeEach(cb) {
-    this.history.ccc(cb)
+    this.beforeHooks.push(cb)
+  }
+  // 后置守卫
+  afterEach(cb) {
+    this.afterHooks.push(cb)
   }
 }
 
@@ -45,7 +51,7 @@ const routes = [
 
 const router = new Router({
   routes,
-  mode: 'history'
+  mode: 'hash'
 })
 router.addRout(
   {
@@ -65,7 +71,17 @@ router.addRouts([
     },
   }
 ])
-
+router.beforeEach((to, from, next) => {
+  // console.log(to, '1')
+  next()
+})
+router.beforeEach((to, from, next) => {
+  // console.log(to, '2')
+  next()
+})
+router.afterEach((to, from) => {
+  console.log(to, from)
+})
 console.log(router)
 
 export default router
