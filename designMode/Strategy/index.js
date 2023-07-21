@@ -52,44 +52,53 @@ const strategy = {
     // return uname
   }
 }
+
+
+class Event {
+  constructor () {
+    
+  }
+}
 /**
  * 策略模式验证，也算是发布订阅模式
  */
 class Validator {
   constructor() {
-    this.cache = []
+    this.cache = {}
   }
-  add(dom, rules) {
-
+  add(type, dom, rules) {
+    this.cache[type] = []
     rules.forEach(rule => {
       let { strage, errMsg } = rule
       let length
       if (strage.includes(':')) {
         const strageArr = strage.split(':')
-
         strage = strageArr[0]
         length = strageArr[1]
       }
-      this.cache.push(() => {
+      this.cache[type].push(() => {
         return strategy[strage].call(strategy, dom.value, errMsg, length)
       })
+      
     })
   }
   start() {
-    return this.cache.map(cb => cb())
+    return Object.values(this.cache).flat().map(cb => cb())
+   
   }
 }
 
 function startValidator() {
   const validator = new Validator()
-  validator.add(window.unameEle, [
+  validator.add('uname', window.unameEle, [
     { strage: 'unameEmpty', errMsg: '用户名不为空' },
     { strage: 'minLength:6', errMsg: '用户名要大于六位' }
 
   ])
-  validator.add(window.upwdEle, [
+  validator.add('upwd', window.upwdEle, [
     { strage: 'upwdEmpty', errMsg: '密码不为空' }
   ])
+  console.log(validator)
   return validator.start()
 }
 
