@@ -7,6 +7,7 @@ class ModuleCollection {
     this.root = null
     this.register([], options)
   }
+  // 注册模块
   register(path, rootModule) {
     let newModule = new Module(rootModule)
     if (!this.root) {
@@ -23,6 +24,7 @@ class ModuleCollection {
     let obj = newModule._raw.modules
     if (obj) {
       Object.keys(obj).forEach(key => {
+        // 栈结构确认父子关系
         this.register(path.concat(key), obj[key])
       })
     }

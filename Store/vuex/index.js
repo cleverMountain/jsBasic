@@ -7,10 +7,21 @@ class Store {
     this._modules = new ModuleCollection(options)
     this._mutations = Object.create(null)
     this._actions = Object.create(null)
-    this._wrappedGetters = Object.create(null)
+    this._getters = Object.create(null)
     const state = this._modules.root.state
     installModule(this, state, [], this._modules.root)
-    console.log(this)
+
+  }
+  commit(method, paload) {
+    // console.log(this._mutations, method)
+    // debugger
+    this._mutations[method].forEach(cb => {
+      console.log(this)
+      cb(this.state, paload)
+    })
+  }
+  dispatch() {
+
   }
 }
 

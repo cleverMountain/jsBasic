@@ -1,7 +1,7 @@
 // @ts-nocheck
 import Store from "./vuex/index"
 
-new Store({
+let store =  new Store({
   state: {
     age: 1
   },
@@ -80,3 +80,32 @@ new Store({
     }
   }
 })
+
+
+
+
+
+class Event {
+  constructor(store) {
+    this.store = store
+    this.commitEle = document.getElementById('commit')
+    this.dispatchEle = document.getElementById('dispatch')
+    this.init()
+  }
+  init() {
+    this.bindEvent()
+  }
+  bindEvent() {
+    this.commitEle.addEventListener('click', this.handleCommit.bind(this), false)
+    this.dispatchEle.addEventListener('click', this.handleDispatch.bind(this), false)
+  }
+  handleCommit() {
+    console.log(this)
+    this.store.commit('add', 1)
+  }
+  handleDispatch() {
+    this.store.dispatch('add', 2)
+  }
+}
+
+console.log(new Event(store))
