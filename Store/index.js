@@ -1,5 +1,6 @@
 // @ts-nocheck
 import Store from "./vuex/index"
+import Dep from "./observe//index"
 
 let store = new Store({
   state: {
@@ -96,11 +97,13 @@ class Event {
     this.commitEle = document.getElementById('commit')
     this.dispatchEle = document.getElementById('dispatch')
     this.innerEle = document.getElementById('inner')
+    this.dep = new Dep()
     this.init()
   }
   init() {
     this.addState()
     this.proxy(this.store.$state, this.store.state)
+    this.compiler()
     this.bindEvent()
   }
   bindEvent() {
@@ -112,7 +115,7 @@ class Event {
     this.store.commit('add', 1)
   }
   handleDispatch() {
-    
+
     this.store.dispatch('add', 2)
   }
   addState() {
@@ -127,6 +130,7 @@ class Event {
       } else {
         Object.defineProperty(proxyObj, key, {
           get() {
+            that.dep.depend(key)
             return originObj[key]
           },
           set(newVal) {
@@ -140,7 +144,23 @@ class Event {
     })
   }
   notify() {
-    debugger
+    this.changePage()
+  }
+  changePage() {
+    let res = this.findKeyWord(this.innerEle.innerHTML)
+  
+    let newInner = this.store.state[res]
+  
+    this.innerEle.innerHTML = newInner
+  }
+  findKeyWord(text) {
+    const defaultTagRE = /\{\{((?:.|\r?\n)+?)\}\}/g;
+    let res = defaultTagRE.exec(text)
+    return res ? res[1] : false
+  }
+
+  compiler() {
+    this.changePage()
   }
 }
 
