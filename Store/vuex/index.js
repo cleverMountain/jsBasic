@@ -2,6 +2,7 @@
 import ModuleCollection from "./module/index"
 import installModule from "./installModule"
 
+let that
 class Store {
   constructor(options) {
     this._modules = new ModuleCollection(options)
@@ -10,18 +11,19 @@ class Store {
     this._getters = Object.create(null)
     const state = this._modules.root.state
     installModule(this, state, [], this._modules.root)
-
+    that = this
   }
   commit(method, paload) {
-    // console.log(this._mutations, method)
-    // debugger
-    this._mutations[method].forEach(cb => {
-      console.log(this)
-      cb(this.state, paload)
+
+    that._mutations[method].forEach(cb => {
+      cb.call(this, that.state, paload)
     })
   }
-  dispatch() {
-
+  dispatch(method, paload) {
+    this._actions[method].forEach(cb => {
+ 
+      cb.call(this, this, paload)
+    })
   }
 }
 

@@ -1,7 +1,7 @@
 // @ts-nocheck
 import Store from "./vuex/index"
 
-let store =  new Store({
+let store = new Store({
   state: {
     age: 1
   },
@@ -19,9 +19,10 @@ let store =  new Store({
   },
   actions: {
     add({ commit }, payload) {
-
+      console.log(this)
       setTimeout(() => {
-        commit.call(this, 'add', payload)
+
+        commit('add', payload)
       }, 1000)
     }
   },
@@ -44,9 +45,13 @@ let store =  new Store({
         }
       },
       actions: {
+
         add({ commit }, payload) {
+          debugger
+          let that = this
+          console.log(this)
           setTimeout(() => {
-            commit('add', payload)
+            commit.call(that, 'add', payload)
           }, 1000)
         }
       },
@@ -90,9 +95,12 @@ class Event {
     this.store = store
     this.commitEle = document.getElementById('commit')
     this.dispatchEle = document.getElementById('dispatch')
+    this.innerEle = document.getElementById('inner')
     this.init()
   }
   init() {
+    this.addState()
+    this.proxy(this.store.$state, this.store.state)
     this.bindEvent()
   }
   bindEvent() {
@@ -104,7 +112,35 @@ class Event {
     this.store.commit('add', 1)
   }
   handleDispatch() {
+    
     this.store.dispatch('add', 2)
+  }
+  addState() {
+    this.store.$state = JSON.parse(JSON.stringify(this.store.state))
+    this.store.state = {}
+  }
+  proxy(originObj, proxyObj) {
+    let that = this
+    Object.keys(originObj).forEach(key => {
+      if (typeof originObj[key] === 'object') {
+        this.proxy(originObj[key], proxyObj[key] = {})
+      } else {
+        Object.defineProperty(proxyObj, key, {
+          get() {
+            return originObj[key]
+          },
+          set(newVal) {
+            // 更新视图
+            that.notify()
+            originObj[key] = newVal
+          }
+        })
+      }
+
+    })
+  }
+  notify() {
+    debugger
   }
 }
 
