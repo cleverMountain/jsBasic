@@ -10,6 +10,7 @@ class ModuleCollection {
   // 注册模块
   register(path, rootModule) {
     let newModule = new Module(rootModule)
+    rootModule.newModule = newModule
     if (!this.root) {
       this.root = newModule
     } else {
@@ -28,6 +29,7 @@ class ModuleCollection {
         this.register(path.concat(key), obj[key])
       })
     }
+    console.log(this)
   }
 }
 

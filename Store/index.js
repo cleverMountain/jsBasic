@@ -1,10 +1,12 @@
 // @ts-nocheck
 import Store from "./vuex/index"
 import Dep from "./observe//index"
+import Watcher from "./observe/watcher"
 
 let store = new Store({
   state: {
-    age: 1
+    age: 1,
+    age2: 2
   },
   getters: {
     age(state) {
@@ -14,16 +16,19 @@ let store = new Store({
   // 唯一修改状态的地方
   mutations: {
     add(state, payload) {
-
       state.age += payload
+    },
+    add2(state, payload) {
+
+      state.age2 += payload
     }
   },
   actions: {
-    add({ commit }, payload) {
+    add1({ commit }, payload) {
       console.log(this)
       setTimeout(() => {
 
-        commit('add', payload)
+        commit('add2', payload)
       }, 1000)
     }
   },
@@ -47,8 +52,8 @@ let store = new Store({
       },
       actions: {
 
-        add({ commit }, payload) {
-          debugger
+        add1({ commit }, payload) {
+      
           let that = this
           console.log(this)
           setTimeout(() => {
@@ -116,7 +121,7 @@ class Event {
   }
   handleDispatch() {
 
-    this.store.dispatch('add', 2)
+    this.store.dispatch('add1', 2)
   }
   addState() {
     this.store.$state = JSON.parse(JSON.stringify(this.store.state))
@@ -130,28 +135,20 @@ class Event {
       } else {
         Object.defineProperty(proxyObj, key, {
           get() {
+            // 收集依赖
             that.dep.depend(key)
+            // debugger
             return originObj[key]
           },
           set(newVal) {
             // 更新视图
-            that.notify()
             originObj[key] = newVal
+            that.dep.notify()
           }
         })
       }
 
     })
-  }
-  notify() {
-    this.changePage()
-  }
-  changePage() {
-    let res = this.findKeyWord(this.innerEle.innerHTML)
-  
-    let newInner = this.store.state[res]
-  
-    this.innerEle.innerHTML = newInner
   }
   findKeyWord(text) {
     const defaultTagRE = /\{\{((?:.|\r?\n)+?)\}\}/g;
@@ -160,7 +157,10 @@ class Event {
   }
 
   compiler() {
-    this.changePage()
+    new Watcher(this.innerEle, this.store.state)
+    this.store.state.age
+    this.store.state.age2
+    this.dep.notify()
   }
 }
 

@@ -21,9 +21,14 @@ class Store {
   }
   dispatch(method, paload) {
     this._actions[method].forEach(cb => {
- 
       cb.call(this, this, paload)
     })
+  }
+  // [a, my] a/my
+  registerModule(path, module) {
+    this._modules.register(path, module)
+    console.log(module.newModule)
+    installModule(this, this.state, path, module.newModule)
   }
 }
 
