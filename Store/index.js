@@ -2,6 +2,8 @@
 import Store from "./vuex/index"
 import Dep from "./observe//index"
 import Watcher from "./observe/watcher"
+import persistedState from "./plugin/persistedState"
+import logger from "./plugin/logger"
 
 let store = new Store({
   state: {
@@ -53,7 +55,7 @@ let store = new Store({
       actions: {
 
         add1({ commit }, payload) {
-      
+
           let that = this
           console.log(this)
           setTimeout(() => {
@@ -89,12 +91,13 @@ let store = new Store({
         }
       }
     }
-  }
+  },
+  plugins: [persistedState, logger] // 插件机制，都是函数
 })
 
 
 
-
+store.mapState()
 
 class Event {
   constructor(store) {

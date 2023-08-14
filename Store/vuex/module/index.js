@@ -29,7 +29,6 @@ class ModuleCollection {
         this.register(path.concat(key), obj[key])
       })
     }
-    console.log(this)
   }
 }
 
