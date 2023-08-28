@@ -1380,9 +1380,11 @@ const reservedWordLikeSet = new Set(["break", "case", "catch", "continue", "defa
 function canBeReservedWord(word) {
   return reservedWordLikeSet.has(word);
 }
+// 域对象，包含
 class Scope {
   constructor(flags) {
     this.var = new Set();
+    // lexical 词法
     this.lexical = new Set();
     this.functions = new Set();
     this.flags = flags;
@@ -1438,7 +1440,15 @@ class ScopeHandler {
   createScope(flags) {
     return new Scope(flags);
   }
+  // 作用域处理
   enter(flags) {
+    /**
+     * createScope
+     * flags: 1
+     * functions: Set(0) {size: 0}
+     * lexical: Set(0) {size: 0}
+     * var: Set(0) {size: 0}
+     */
     this.scopeStack.push(this.createScope(flags));
   }
   exit() {
@@ -1562,6 +1572,7 @@ class FlowScopeHandler extends ScopeHandler {
     }
   }
 }
+// 最基础的解析工具,基础类
 class BaseParser {
   constructor() {
     this.sawUnambiguousESM = false;
@@ -2184,9 +2195,18 @@ class Token {
 }
 class Tokenizer extends CommentsParser {
   constructor(options, input) {
+  
+    /**
+     * 最基础的解析类  
+     * this.sawUnambiguousESM = false;
+     * this.ambiguousScriptDifferentAst = false;
+     */
     super();
+    // this.sawUnambiguousESM = false;
+    // this.ambiguousScriptDifferentAst = false;
     this.isLookahead = void 0;
     this.tokens = [];
+    // 暂不知道做什么
     this.errorHandlers_readInt = {
       invalidDigit: (pos, lineStart, curLine, radix) => {
         if (!this.options.errorRecovery) return false;
@@ -2225,6 +2245,7 @@ class Tokenizer extends CommentsParser {
     });
     this.state = new State();
     this.state.init(options);
+    // input输入
     this.input = input;
     this.length = input.length;
     this.isLookahead = false;
@@ -3705,9 +3726,11 @@ class UtilParser extends Tokenizer {
   }
   enterInitialScopes() {
     let paramFlags = PARAM;
+    // is in ES Moduless是否在Esmodules中
     if (this.inModule) {
       paramFlags |= PARAM_AWAIT;
     }
+    // 进入新的作用域如函数
     this.scope.enter(1);
     this.prodParam.enter(paramFlags);
   }
@@ -10450,6 +10473,7 @@ const mixinPlugins = {
   placeholders
 };
 const mixinPluginNames = Object.keys(mixinPlugins);
+// 默认选项
 const defaultOptions = {
   sourceType: "script",
   sourceFilename: undefined,
@@ -10470,6 +10494,7 @@ const defaultOptions = {
   attachComment: true,
   annexB: true
 };
+// 把选项拿到，如果不传则是默认选项defaultOptions
 function getOptions(opts) {
   if (opts == null) {
     return Object.assign({}, defaultOptions);
@@ -12402,6 +12427,7 @@ function babel7CompatTokens(tokens, input) {
   }
   return tokens;
 }
+// 处理parser
 class StatementParser extends ExpressionParser {
   parseTopLevel(file, program) {
     file.program = this.parseProgram(program);
@@ -14284,10 +14310,16 @@ class StatementParser extends ExpressionParser {
 }
 class Parser extends StatementParser {
   constructor(options, input) {
+    // 获取解析选项, 这里是defaultOptions
     options = getOptions(options);
+    console.log(options, 'before')
+    // 将defaultOptions及input传入
     super(options, input);
+    console.log(options, 'after')
     this.options = options;
+    // 初始化作用域
     this.initializeScopes();
+    // 插件
     this.plugins = pluginsMap(this.options.plugins);
     this.filename = options.sourceFilename;
   }
@@ -14295,6 +14327,8 @@ class Parser extends StatementParser {
     return ScopeHandler;
   }
   parse() {
+    debugger
+    // 进入初始化作用域
     this.enterInitialScopes();
     const file = this.startNode();
     const program = this.startNode();
@@ -14341,7 +14375,11 @@ function parse(input, options) {
       throw moduleError;
     }
   } else {
+
+    // 接14370，获取特定版本的解析器
     let aaa = getParser(options, input)
+    console.log(aaa)
+    // 使用解析器的parse方法将input转化成ast语法树
     debugger
     let bbb = aaa.parse()
     // return getParser(options, input).parse();
@@ -14367,6 +14405,7 @@ const tokTypes = generateExportedTokenTypes(tt);
 
 
 function getParser(options, input) {
+  // 构建解析器实例
   let cls = Parser;
   if (options != null && options.plugins) {
     validatePlugins(options.plugins);

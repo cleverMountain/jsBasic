@@ -7,3 +7,14 @@
 # 调试
 node --inspect-brk .\index.js
 chrome://inspect/#devices
+
+
+# parse 内容
+1. 14316
+```js
+function parse (input, options) {
+  // 
+  // 通过option，获取parser 
+  getParser(options, input)
+} 
+```
