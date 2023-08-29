@@ -1,7 +1,6 @@
 {
   "dependencies": {
-    "@babel/core": "^7.22.10",
-    "vite": "^4.4.9"
+    "@babel/core": "^7.22.10"
   },
   "name": "babel",
   "description": "1. babel的核心作用是将源码转化成ast树再将ast树转化成需要的另一种ast树，最后通过Generate生成代码",
@@ -11,9 +10,6 @@
     "lib": "lib"
   },
   "devDependencies": {},
-  "scripts": {
-    "dev": "vite"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC"
