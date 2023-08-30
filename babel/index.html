@@ -10,18 +10,17 @@
 
 <body>
   <div>231</div>
-  <script type="module" >
+  <script type="module">
     import utils from "./src/parse.js"
     const { parse, parseExpression, tokTypes } = utils
     const str = `
-      let fn = () => {
-        return 1
-      }
+      const message = "Hello, world!";
+      console.log(message);
     `
-   
+
     let map = parse(str)
     console.log(map)
-    
+
   </script>
 </body>
 
