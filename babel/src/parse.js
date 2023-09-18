@@ -2500,6 +2500,7 @@ class Tokenizer extends CommentsParser {
     this.state.type = type;
     this.state.value = val;
     if (!this.isLookahead) {
+      debugger
       this.updateContext(prevType);
     }
   }

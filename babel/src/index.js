@@ -13,7 +13,7 @@ const code = `
 // 解析（Parsing）
 const ast = parser.parse(code);
 
-debugger
+
 // 遍历（Traversing
 traverse(ast, {
   enter(path) {
